@@ -1,4 +1,4 @@
-fsc -language:postfixOps -feature -d out src/*.scala
+scalac -language:postfixOps -feature -d out src/*.scala
 
 cp src/scalac-plugin.xml out
 

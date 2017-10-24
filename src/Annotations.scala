@@ -1,4 +1,3 @@
-package com.nenuadrian.annotations
 
 import scala.annotation.StaticAnnotation
 

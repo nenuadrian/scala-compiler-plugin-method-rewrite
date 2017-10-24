@@ -1,4 +1,4 @@
 <plugin>
   <name>CompilerPlugin</name>
-  <classname>com.nenuadrian.CompilerPlugin</classname>
+  <classname>CompilerPlugin</classname>
 </plugin>

@@ -1,9 +1,7 @@
-package com.nenuadrian
 import scala.tools.nsc.Global
 import scala.tools.nsc.Phase
 import scala.tools.nsc.plugins._
 import scala.tools.nsc.transform._
-
 
 class CompilerPlugin(override val global: Global) extends Plugin {
   override val name = "compiler-plugin"
