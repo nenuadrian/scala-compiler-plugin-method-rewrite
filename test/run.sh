@@ -1,0 +1,1 @@
+scala -classpath "./out" Main
