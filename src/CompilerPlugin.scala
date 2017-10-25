@@ -11,7 +11,7 @@ class CompilerPlugin(override val global: Global) extends Plugin {
   override val components = List(new CompilerPluginComponent(global))
 }
 
-class CompilerPluginComponent(val global: Global) 
+class CompilerPluginComponent(val global: Global)
   extends PluginComponent with TypingTransformers {
     import global._
     override val phaseName = "compiler-plugin-phase"
@@ -22,7 +22,7 @@ class CompilerPluginComponent(val global: Global)
       }
     }
 
-    class MyTypingTransformer(unit: CompilationUnit) 
+    class MyTypingTransformer(unit: CompilationUnit)
       extends TypingTransformer(unit) {
         def methodWrapper(rhs: Tree) = {
           Block(
@@ -35,11 +35,11 @@ class CompilerPluginComponent(val global: Global)
         }
 
         override def transform(tree: Tree) = tree match {
-          case dd: DefDef => 
+          case dd: DefDef =>
             if (dd.mods.hasAnnotationNamed(
               TypeName(typeOf[annotations.wrapThisMethod].typeSymbol.name.toString))) {
               println(dd)
-              val wrappedMethod = treeCopy.DefDef(dd, dd.mods, dd.name, dd.tparams, 
+              val wrappedMethod = treeCopy.DefDef(dd, dd.mods, dd.name, dd.tparams,
                 dd.vparamss, dd.tpt, methodWrapper(dd.rhs))
               println(wrappedMethod)
               wrappedMethod
@@ -51,12 +51,4 @@ class CompilerPluginComponent(val global: Global)
     }
     
     def newTransformer(unit: CompilationUnit) = new MyTypingTransformer(unit)
-
-    lazy val mirror: Mirror = {
-      val rm = new GlobalMirror 
-      rm.init
-      rm.asInstanceOf[Mirror]
-    }
-    lazy val anno = mirror.getRequiredClass("wrapThisMethod")
 }
-
