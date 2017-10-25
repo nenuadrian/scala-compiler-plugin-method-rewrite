@@ -1,4 +1,4 @@
 <plugin>
   <name>CompilerPlugin</name>
-  <classname>CompilerPlugin</classname>
+  <classname>com.compilerplugin.CompilerPlugin</classname>
 </plugin>

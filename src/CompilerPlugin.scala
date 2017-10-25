@@ -1,3 +1,5 @@
+package com.compilerplugin
+
 import scala.tools.nsc.Global
 import scala.tools.nsc.Phase
 import scala.tools.nsc.plugins._
@@ -34,7 +36,8 @@ class CompilerPluginComponent(val global: Global)
 
         override def transform(tree: Tree) = tree match {
           case dd: DefDef => 
-            if (dd.mods.annotations.size > 0) {
+            if (dd.mods.hasAnnotationNamed(
+              TypeName(typeOf[annotations.wrapThisMethod].typeSymbol.name.toString))) {
               println(dd)
               val wrappedMethod = treeCopy.DefDef(dd, dd.mods, dd.name, dd.tparams, 
                 dd.vparamss, dd.tpt, methodWrapper(dd.rhs))
@@ -48,5 +51,12 @@ class CompilerPluginComponent(val global: Global)
     }
     
     def newTransformer(unit: CompilationUnit) = new MyTypingTransformer(unit)
+
+    lazy val mirror: Mirror = {
+      val rm = new GlobalMirror 
+      rm.init
+      rm.asInstanceOf[Mirror]
+    }
+    lazy val anno = mirror.getRequiredClass("wrapThisMethod")
 }
 

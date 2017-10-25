@@ -1,1 +1,1 @@
-scala -classpath "./out" Main
+scala -classpath "./out" com.nenuadrian.myApp.Main
