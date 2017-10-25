@@ -22,21 +22,24 @@ class CompilerPluginComponent(val global: Global)
 
     class MyTypingTransformer(unit: CompilationUnit) 
       extends TypingTransformer(unit) {
+        def methodWrapper(rhs: Tree) = {
+          Block(
+            q"""println("Inside - before")""",
+            DefDef(Modifiers(), TermName("runMethod"), List(), List(), TypeTree(), rhs),
+            q"val r = runMethod",
+            q"""println("Inside - after")""",
+            q"r"
+          )
+        }
+
         override def transform(tree: Tree) = tree match {
           case dd: DefDef => 
             if (dd.mods.annotations.size > 0) {
               println(dd)
-              val ddd = treeCopy.DefDef(dd, dd.mods, dd.name, dd.tparams, dd.vparamss, dd.tpt,
-                Block(
-                  q"""println("Inside - before")""",
-                  DefDef(Modifiers(), TermName("runMethod"), List(), List(), TypeTree(), dd.rhs),
-                  q"val r = runMethod",
-                  q"""println("Inside - after")""",
-                  q"r"
-                )
-              )
-              println(ddd)
-              ddd
+              val wrappedMethod = treeCopy.DefDef(dd, dd.mods, dd.name, dd.tparams, 
+                dd.vparamss, dd.tpt, methodWrapper(dd.rhs))
+              println(wrappedMethod)
+              wrappedMethod
             } else {
               dd
             }
