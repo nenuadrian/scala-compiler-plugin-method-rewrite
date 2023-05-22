@@ -2,10 +2,8 @@
 
 https://medium.com/@adrian.n/scala-compiler-plugin-annotation-based-method-ast-rewriting-wrapping-substitution-b802f2d922f1
 
-A small example of a scala compiler plugin with basic annotation parsing, AST traversal and DefDef method body replacement by subsituting the block with an inner method wrapping the original code + extra behaviour.
+The article showcases a Scala compiler plugin that serves as a small example. It demonstrates basic annotation parsing, AST traversal, and the replacement of a method body (DefDef) by substituting the block with an inner method that wraps the original code and includes additional behavior.
 
+To observe the output of the attached compiler plugin, run the "./build.sh" command, followed by navigating to the "test" directory and executing "./build.sh" there.
 
-Run ./buid.sh and cd test; ./build.sh to see the output of the attached compiler plugin.
-
-
-Excute cd test; ./run.sh to see the outputs of the replaced method. Still returns the same value but it's behaviour can be enhanced, eg sent for execution remotely.
+To view the outputs of the replaced method, run "./run.sh" within the "test" directory. Although the method still returns the same value, its behavior can be enhanced, such as being sent for remote execution
